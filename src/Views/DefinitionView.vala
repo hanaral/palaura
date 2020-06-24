@@ -17,12 +17,14 @@ public class Palaura.DefinitionView : Palaura.View {
     Core.Definition definition;
 
     construct {
+        set_size_request (360, -1);
+
         scrolled_window = new Gtk.ScrolledWindow (null, null);
-        scrolled_window.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
         scrolled_window.set_border_width (0);
         add (scrolled_window);
 
         text_view = new Gtk.SourceView ();
+        text_view.top_margin = text_view.bottom_margin = text_view.left_margin = text_view.right_margin = 12;
         text_view.set_wrap_mode (Gtk.WrapMode.WORD_CHAR);
         text_view.set_editable (false);
         text_view.set_cursor_visible (false);
@@ -30,12 +32,12 @@ public class Palaura.DefinitionView : Palaura.View {
         text_view.buffer = buffer;
         var style_manager = Gtk.SourceStyleSchemeManager.get_default ();
         if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
-            var style = style_manager.get_scheme ("solarized-dark");
+            var style = style_manager.get_scheme ("oblivion");
             buffer.set_style_scheme (style);
             scrolled_window.get_style_context ().add_class ("palaura-view-dark");
             scrolled_window.get_style_context ().remove_class ("palaura-view");
         } else {
-            var style = style_manager.get_scheme ("solarized-light");
+            var style = style_manager.get_scheme ("tango");
             buffer.set_style_scheme (style);
             scrolled_window.get_style_context ().remove_class ("palaura-view-dark");
             scrolled_window.get_style_context ().add_class ("palaura-view");
@@ -43,18 +45,18 @@ public class Palaura.DefinitionView : Palaura.View {
 
         Palaura.Application.gsettings.changed.connect (() => {
             if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
-                var style = style_manager.get_scheme ("solarized-dark");
+                var style = style_manager.get_scheme ("oblivion");
                 buffer.set_style_scheme (style);
                 scrolled_window.get_style_context ().add_class ("palaura-view-dark");
                 scrolled_window.get_style_context ().remove_class ("palaura-view");
             } else {
-                var style = style_manager.get_scheme ("solarized-light");
+                var style = style_manager.get_scheme ("tango");
                 buffer.set_style_scheme (style);
                 scrolled_window.get_style_context ().remove_class ("palaura-view-dark");
                 scrolled_window.get_style_context ().add_class ("palaura-view");
             }
         });
-        
+
         scrolled_window.add (text_view);
 
         tag_word = buffer.create_tag (null, "weight", Pango.Weight.BOLD, "font", "serif 18");
@@ -122,6 +124,18 @@ public class Palaura.DefinitionView : Palaura.View {
                 if (examples.length > 0) {
                     buffer.insert_with_tags (ref iter, @"◆  ", -1, tag_sense_explaining);
                     buffer.insert_with_tags (ref iter, @"$(examples[0].text)\n", -1, tag_sense_examples);
+                }
+
+                var synonyms = senses[i].get_synonyms ();
+                if (synonyms.length > 0) {
+                    buffer.insert_with_tags (ref iter, @"⊕  ", -1, tag_sense_explaining);
+                    buffer.insert_with_tags (ref iter, @"$(synonyms[0].text)\n", -1, tag_sense_examples);
+                }
+
+                var antonyms = senses[i].get_antonyms ();
+                if (antonyms.length > 0) {
+                    buffer.insert_with_tags (ref iter, @"⊗  ", -1, tag_sense_explaining);
+                    buffer.insert_with_tags (ref iter, @"$(antonyms[0].text)\n", -1, tag_sense_examples);
                 }
             }
         }

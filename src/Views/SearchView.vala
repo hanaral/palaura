@@ -23,6 +23,8 @@ public class Palaura.SearchView : Palaura.View {
                 show_definition(definition);
             });
         list_view.edge_reached.connect (on_scroll);
+
+        set_size_request (360, -1);
     }
 
     construct {

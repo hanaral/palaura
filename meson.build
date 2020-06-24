@@ -53,7 +53,6 @@ executable(
     'src/Views/DefinitionView.vala',
     'src/Widgets/WordListRow.vala',
     'src/Widgets/WordContainerGrid.vala',
-    'src/Widgets/Preferences.vala',
     'src/Application.vala',
     'src/MainWindow.vala',
     asresources,

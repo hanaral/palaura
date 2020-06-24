@@ -39,6 +39,8 @@ public class Palaura.Core.Definition : Object {
     public class Sense {
         string[] definitions = {};
         Example[] examples = {};
+        Synonym[] synonyms = {};
+        Antonym[] antonyms = {};
 
         public string[] get_definitions () {
             return definitions;
@@ -48,11 +50,45 @@ public class Palaura.Core.Definition : Object {
             return examples;
         }
 
+        public Synonym[] get_synonyms () {
+            return synonyms;
+        }
+
+        public Antonym[] get_antonyms () {
+            return antonyms;
+        }
+
         public class Example {
             public string text;
 
             public static Example parse_json (Json.Object root) {
                 Example obj = new Example ();
+
+                if (root.has_member ("text"))
+                    obj.text = root.get_string_member ("text");
+
+                return obj;
+            }
+        }
+
+        public class Synonym {
+            public string text;
+
+            public static Synonym parse_json (Json.Object root) {
+                Synonym obj = new Synonym ();
+
+                if (root.has_member ("text"))
+                    obj.text = root.get_string_member ("text");
+
+                return obj;
+            }
+        }
+
+        public class Antonym {
+            public string text;
+
+            public static Antonym parse_json (Json.Object root) {
+                Antonym obj = new Antonym ();
 
                 if (root.has_member ("text"))
                     obj.text = root.get_string_member ("text");
@@ -74,6 +110,18 @@ public class Palaura.Core.Definition : Object {
                 Json.Array examples = root.get_array_member ("examples");
                 foreach (var example in examples.get_elements ())
                     obj.examples += Example.parse_json (example.get_object ());
+            }
+
+            if (root.has_member ("synonyms")) {
+                Json.Array synonyms = root.get_array_member ("synonyms");
+                foreach (var synonym in synonyms.get_elements ())
+                    obj.synonyms += Synonym.parse_json (synonym.get_object ());
+            }
+
+            if (root.has_member ("antonyms")) {
+                Json.Array antonyms = root.get_array_member ("antonyms");
+                foreach (var antonym in antonyms.get_elements ())
+                    obj.antonyms += Antonym.parse_json (antonym.get_object ());
             }
 
             return obj;

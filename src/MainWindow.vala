@@ -15,9 +15,7 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
 
     public MainWindow(Gtk.Application app) {
         Object (application: app,
-                title: _("Palaura"),
-                height_request: 700,
-                width_request: 800);
+                title: "Palaura");
 
         search_entry.search_changed.connect (trigger_search);
         search_entry.key_press_event.connect ((event) => {
@@ -44,6 +42,32 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
             }
             return false;
         });
+
+        if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
+            Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
+            this.get_style_context ().add_class ("palaura-window-dark");
+            this.get_style_context ().remove_class ("palaura-window");
+            search_view.get_style_context ().add_class ("palaura-view-dark");
+            search_view.get_style_context ().remove_class ("palaura-view");
+            normal_view.get_style_context ().add_class ("palaura-view-dark");
+            normal_view.get_style_context ().remove_class ("palaura-view");
+            definition_view.get_style_context ().add_class ("palaura-view-dark");
+            definition_view.get_style_context ().remove_class ("palaura-view");
+            stack.get_style_context ().add_class ("palaura-view-dark");
+            stack.get_style_context ().remove_class ("palaura-view");
+        } else {
+            Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = false;
+            this.get_style_context ().remove_class ("palaura-window-dark");
+            this.get_style_context ().add_class ("palaura-window");
+            search_view.get_style_context ().add_class ("palaura-view");
+            search_view.get_style_context ().remove_class ("palaura-view-dark");
+            normal_view.get_style_context ().add_class ("palaura-view");
+            normal_view.get_style_context ().remove_class ("palaura-view-dark");
+            definition_view.get_style_context ().add_class ("palaura-view");
+            definition_view.get_style_context ().remove_class ("palaura-view-dark");
+            stack.get_style_context ().add_class ("palaura-view");
+            stack.get_style_context ().remove_class ("palaura-view-dark");
+        }
 
         Palaura.Application.gsettings.changed.connect (() => {
             if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
@@ -140,24 +164,71 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
             }
         });
 
-        var menu_button = new Gtk.Button ();
+        var label = new Gtk.Label (_("Lookup language:"));
+        var lang = new Gtk.ComboBoxText ();
+        lang.append_text (_("English"));
+        lang.append_text (_("Spanish"));
+        lang.append_text (_("Hindi"));
+        var dict_lang = Palaura.Application.gsettings.get_string("dict-lang");
+
+        switch (dict_lang) {
+            case "en":
+                lang.active = 0;
+                break;
+            case "es":
+                lang.active = 1;
+                break;
+            case "hi":
+                lang.active = 2;
+                break;
+            default:
+                lang.active = 0;
+                break;
+        }
+        lang.changed.connect (() => {
+            switch (lang.active) {
+                case 0:
+                    Palaura.Application.gsettings.set_string("dict-lang", "en");
+                    break;
+                case 1:
+                    Palaura.Application.gsettings.set_string("dict-lang", "es");
+                    break;
+                case 2:
+                    Palaura.Application.gsettings.set_string("dict-lang", "hi");
+                    break;
+            }
+        });
+
+
+        var settings_grid = new Gtk.Grid ();
+        settings_grid.orientation = Gtk.Orientation.VERTICAL;
+        settings_grid.column_homogeneous = true;
+        settings_grid.column_spacing = 6;
+        settings_grid.margin = 12;
+        settings_grid.attach (label, 0, 2, 1, 1);
+        settings_grid.attach (lang, 1, 2, 1, 1);
+        settings_grid.show_all ();
+
+        var settings_pop = new Gtk.Popover (null);
+        settings_pop.add (settings_grid);
+
+        var menu_button = new Gtk.MenuButton ();
         menu_button.has_tooltip = true;
         menu_button.image = new Gtk.Image.from_icon_name ("open-menu-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         menu_button.tooltip_text = _("Settings");
-        menu_button.clicked.connect (() => {
-            debug ("Prefs button pressed.");
-            var preferences_dialog = new Widgets.Preferences (this);
-            preferences_dialog.show_all ();
-        });
+        menu_button.popover = settings_pop;
 
         headerbar = new Gtk.HeaderBar ();
         headerbar.show_close_button = true;
         headerbar.set_title (_("Palaura"));
         headerbar.has_subtitle = false;
         headerbar.pack_start (button_stack);
+        headerbar.set_custom_title (search_entry);
         headerbar.pack_end (menu_button);
         headerbar.pack_end (mode_switch);
-        headerbar.pack_start (search_entry);
+
+        headerbar.get_style_context ().add_class ("palaura-toolbar");
+
         set_titlebar (headerbar);
 
         search_view = new Palaura.SearchView();
@@ -174,10 +245,18 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
 
         int x = Palaura.Application.gsettings.get_int("window-x");
         int y = Palaura.Application.gsettings.get_int("window-y");
+        int w = Palaura.Application.gsettings.get_int("window-w");
+        int h = Palaura.Application.gsettings.get_int("window-h");
 
         if (x != -1 && y != -1) {
             move (x, y);
         }
+
+        if (w != -1 && h != -1) {
+            resize (w, h);
+        }
+
+        set_size_request (360, 435);
     }
 
     private void trigger_search () {
@@ -233,8 +312,12 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
     public override bool delete_event (Gdk.EventAny event) {
         int x, y;
         get_position (out x, out y);
+        int w, h;
+        get_size (out w, out h);
         Palaura.Application.gsettings.set_int("window-x", x);
         Palaura.Application.gsettings.set_int("window-y", y);
+        Palaura.Application.gsettings.set_int("window-w", w);
+        Palaura.Application.gsettings.set_int("window-h", h);
         return false;
     }
 }

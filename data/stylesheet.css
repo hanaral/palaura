@@ -1,40 +1,41 @@
-@define-color colorPrimary #cb5353;
-@define-color textColorPrimaryShadow #a45350;
-@define-color textColorPrimary #f5f5f5;
-
 .palaura-window {
-    background-color: @colorPrimary;
+    background-color: #FFF;
+    color: #111;
 }
 
 .palaura-window-dark {
-    background-color: shade(@colorPrimary, 1.2);
-    color: #333;
+    background-color: #111;
+    color: #FFF;
 }
 
 .palaura-view {
-    background-color: #FDF6E3;
-    color: #586E75;
+    background-color: #FFF;
+    color: #111;
 }
 
 .palaura-view image {
-    color: #586E75;
+    color: #111;
 }
 
 .palaura-view:selected {
-    background-color: #586E75;
-    color: @textColorPrimary;
+    background-color: @accent_color_500;
+    color: #FFF;
 }
 
 .palaura-view-dark {
-    background-color: #002B36;
-    color: #93A1A1;
+    background-color: #2E3436;
+    color: #FFF;
 }
 
 .palaura-view-dark image {
-    color: #93A1A1;
+    color: #FFF;
 }
 
 .palaura-view-dark:selected {
-    background-color: #93A1A1;
-    color: #002B36;
+    background-color: @accent_color_500;
+    color: #FFF;
+}
+
+.palaura-toolbar {
+    background: shade(@color_primary, 1.1);
 }
