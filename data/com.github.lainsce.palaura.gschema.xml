@@ -30,5 +30,10 @@
 			<summary>Dictionary language</summary>
 			<description>The language used to query words from its dictionary</description>
 		</key>
+		<key name="recents" type="as">
+			<default>['']</default>
+			<summary>Recent words</summary>
+			<description>The words logged to the recents pane</description>
+		</key>
 	</schema>
 </schemalist>

@@ -1,6 +1,6 @@
-public class Palaura.MainWindow : Gtk.ApplicationWindow {
+public class Palaura.MainWindow : Hdy.Window {
 
-    private Gtk.HeaderBar headerbar;
+    private Hdy.HeaderBar headerbar;
     private Gtk.Stack stack;
     private Gtk.SearchEntry search_entry;
     private Gtk.Stack button_stack;
@@ -11,13 +11,30 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
     private Palaura.NormalView normal_view;
     private Palaura.DefinitionView definition_view;
 
+    private Gtk.TreeIter root;
+    private Gtk.TreeStore store;
+
     private Gee.LinkedList<View> return_history;
+
+    string[] recents = {};
 
     public MainWindow(Gtk.Application app) {
         Object (application: app,
                 title: "Palaura");
 
-        search_entry.search_changed.connect (trigger_search);
+        search_entry.activate.connect (() => {
+            trigger_search ();
+
+            recents += search_entry.text;
+            for (int i=0; i <= 5; i++)
+                Palaura.Application.gsettings.set_strv("recents", recents);
+
+            store.clear ();
+            foreach (var r in recents) {
+                store.insert (out root, null, -1);
+                store.set (root, 0, r, -1);
+            }
+        });
         search_entry.key_press_event.connect ((event) => {
             if (event.keyval == Gdk.Key.Escape) {
                 search_entry.text = "";
@@ -218,7 +235,7 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
         menu_button.tooltip_text = _("Settings");
         menu_button.popover = settings_pop;
 
-        headerbar = new Gtk.HeaderBar ();
+        headerbar = new Hdy.HeaderBar ();
         headerbar.show_close_button = true;
         headerbar.set_title (_("Palaura"));
         headerbar.has_subtitle = false;
@@ -229,8 +246,6 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
 
         headerbar.get_style_context ().add_class ("palaura-toolbar");
 
-        set_titlebar (headerbar);
-
         search_view = new Palaura.SearchView();
         normal_view = new Palaura.NormalView();
         definition_view = new Palaura.DefinitionView();
@@ -239,7 +254,70 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
         stack.add (normal_view);
         stack.add (search_view);
         stack.add (definition_view);
-        add (stack);
+
+        var view = new Gtk.TreeView ();
+        view.expand = true;
+        view.hexpand = true;
+        view.headers_visible = false;
+        view.activate_on_single_click = true;
+
+        var crt = new Gtk.CellRendererText ();
+        crt.font = "Inter 10";
+        crt.ellipsize = Pango.EllipsizeMode.END;
+
+        view.insert_column_with_attributes (-1, "Outline", crt, "text", 0);
+
+        store = new Gtk.TreeStore (1, typeof (string));
+        view.set_model (store);
+
+        store.clear ();
+        foreach (var r in Palaura.Application.gsettings.get_strv("recents")) {
+            store.insert (out root, null, -1);
+            store.set (root, 0, r, -1);
+        }
+        view.expand_all ();
+
+        var selection = view.get_selection ();
+        selection.set_mode (Gtk.SelectionMode.SINGLE);
+
+        view.button_press_event.connect ((widget, event) => {
+            //capture which mouse button
+            uint clicked_button;
+            event.get_button(out clicked_button);
+			//handle right button click for context menu
+            if (event.get_event_type ()  == Gdk.EventType.BUTTON_PRESS  &&  clicked_button == 1){
+                Gtk.TreePath path; Gtk.TreeViewColumn column; int cell_x; int cell_y;
+		        view.get_path_at_pos ((int)event.x, (int)event.y, out path, out column, out cell_x, out cell_y);
+		        view.grab_focus ();
+                view.set_cursor (path, column, false);
+
+				selchanged (selection);
+			}
+			return false;
+        });
+
+        var rec_label = new Gtk.Label (null);
+        rec_label.use_markup = true;
+        rec_label.halign = Gtk.Align.START;
+        rec_label.margin = 6;
+        rec_label.label = _("<span size=\"xx-large\">Recents</span>");
+
+        var outline_grid = new Gtk.Grid ();
+        outline_grid.get_style_context ().add_class ("palaura-recents");
+        outline_grid.hexpand = false;
+        outline_grid.vexpand = false;
+        outline_grid.set_size_request (150, -1);
+        outline_grid.attach (rec_label, 0, 0, 1, 1);
+        outline_grid.attach (view, 0, 1, 1, 1);
+        outline_grid.show_all ();
+
+        var main_grid = new Gtk.Grid ();
+        main_grid.attach (headerbar, 0, 0, 2, 1);
+        main_grid.attach (outline_grid, 0, 1, 1, 1);
+        main_grid.attach (stack, 1, 1, 1, 1);
+        main_grid.show_all ();
+
+        add (main_grid);
 
         return_history = new Gee.LinkedList<Palaura.View> ();
 
@@ -259,6 +337,18 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
         set_size_request (360, 435);
     }
 
+    public void selchanged (Gtk.TreeSelection row) {
+        Gtk.TreeModel pathmodel;
+        Gtk.TreeIter pathiter;
+        if (row.count_selected_rows () == 1){
+            row.get_selected (out pathmodel, out pathiter);
+            Value val;
+            pathmodel.get_value (pathiter, 0, out val);
+
+            search_entry.text = val.get_string ();
+        }
+    }
+
     private void trigger_search () {
         unowned string search = search_entry.text;
         if (search.length < 2) {
@@ -267,7 +357,7 @@ public class Palaura.MainWindow : Gtk.ApplicationWindow {
             }
         } else {
             if (stack.get_visible_child () != search_view) push_view (search_view);
-            search_view.search(search_entry.text);
+                search_view.search(search_entry.text);
         }
     }
 

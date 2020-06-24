@@ -7,6 +7,13 @@ project('com.github.lainsce.palaura', ['vala', 'c'],
 gnome = import('gnome')
 i18n = import('i18n')
 
+add_global_arguments([
+        '-DGETTEXT_PACKAGE="@0@"'.format(meson.project_name()),
+        '-DHANDY_USE_UNSTABLE_API'
+    ],
+    language:'c'
+)
+
 add_project_arguments(['--vapidir', join_paths(meson.current_source_dir(), 'vapi')], language: 'vala')
 
 # Compile the GResources for this project
@@ -27,7 +34,6 @@ pkgdatadir = join_paths([ get_option('prefix'),
 conf.set_quoted('PKGDATADIR', pkgdatadir)
 
 # Other configs
-conf.set_quoted('GETTEXT_PACKAGE', meson.project_name())
 conf
 add_global_arguments('-DDATADIR="' + get_option('datadir') + '"', language: 'c')
 configure_file(output: 'config.h', configuration: conf)
@@ -65,6 +71,7 @@ executable(
         dependency('libsoup-2.4'),
         dependency('json-glib-1.0'),
         dependency('gio-2.0'),
+        dependency('libhandy-1', version: '>=0.80.0'),
         dependency('gee-0.8')
     ],
     vala_args: [

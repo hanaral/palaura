@@ -1,10 +1,12 @@
+@define-color color_primary #C85050;
+
 .palaura-window {
-    background-color: #FFF;
+    background-color: @color_primary;
     color: #111;
 }
 
 .palaura-window-dark {
-    background-color: #111;
+    background-color: shade(@color_primary, 1.4);
     color: #FFF;
 }
 
@@ -38,4 +40,13 @@
 
 .palaura-toolbar {
     background: shade(@color_primary, 1.1);
+}
+
+.palaura-recents,
+.palaura-recents treeview.view {
+    background: @base_color;
+}
+
+.palaura-recents {
+    border-right: 1px solid alpha(black, 0.25);
 }
