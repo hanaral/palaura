@@ -56,6 +56,24 @@ public class Palaura.MainWindow : Hdy.Window {
             return false;
         });
 
+        if (Palaura.Application.grsettings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK) {
+            Palaura.Application.gsettings.set_boolean("dark-mode", true);
+            mode_switch.visible = false;
+        } else if (Palaura.Application.grsettings.prefers_color_scheme == Granite.Settings.ColorScheme.NO_PREFERENCE) {
+            Palaura.Application.gsettings.set_boolean("dark-mode", false);
+            mode_switch.visible = true;
+        }
+
+        Palaura.Application.grsettings.notify["prefers-color-scheme"].connect (() => {
+            if (Palaura.Application.grsettings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK) {
+                Palaura.Application.gsettings.set_boolean("dark-mode", true);
+                mode_switch.visible = false;
+            } else if (Palaura.Application.grsettings.prefers_color_scheme == Granite.Settings.ColorScheme.NO_PREFERENCE) {
+                Palaura.Application.gsettings.set_boolean("dark-mode", false);
+                mode_switch.visible = true;
+            }
+        });
+
         if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
             Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
             this.get_style_context ().add_class ("palaura-window-dark");
