@@ -1,5 +1,7 @@
 public class Palaura.MainWindow : Hdy.Window {
     private Hdy.HeaderBar headerbar;
+    private Hdy.HeaderBar fauxheaderbar;
+    private Hdy.Leaflet leaflet;
     private Gtk.Stack stack;
     private Gtk.SearchEntry search_entry;
     private Gtk.Stack button_stack;
@@ -170,7 +172,7 @@ public class Palaura.MainWindow : Hdy.Window {
         }
 
         search_entry = new Gtk.SearchEntry ();
-        search_entry.placeholder_text = _("Search words");
+        search_entry.placeholder_text = _("Search words…");
 
         button_stack = new Gtk.Stack ();
         return_button = new Gtk.Button.with_label (_("Home"));
@@ -271,6 +273,15 @@ public class Palaura.MainWindow : Hdy.Window {
         view.margin_start = 6;
         view.margin_bottom = 12;
 
+        var no_tasks = new Gtk.Label (_("No Recents…"));
+        no_tasks.halign = Gtk.Align.CENTER;
+        var no_tasks_style_context = no_tasks.get_style_context ();
+        no_tasks_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
+        no_tasks_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+        no_tasks.margin = 12;
+        no_tasks.show_all ();
+        view.set_placeholder (no_tasks);
+
         view.row_selected.connect ((row) => {
             search_entry.text = ((Palaura.RecentsRow)row).title;
             trigger_search ();
@@ -284,6 +295,15 @@ public class Palaura.MainWindow : Hdy.Window {
         bkview.hexpand = true;
         bkview.margin_start = 6;
         bkview.margin_bottom = 12;
+
+        var bkno_tasks = new Gtk.Label (_("No Bookmarks…"));
+        bkno_tasks.halign = Gtk.Align.CENTER;
+        var bkno_tasks_style_context = bkno_tasks.get_style_context ();
+        bkno_tasks_style_context.add_class (Granite.STYLE_CLASS_H3_LABEL);
+        bkno_tasks_style_context.add_class (Gtk.STYLE_CLASS_DIM_LABEL);
+        bkno_tasks.margin = 12;
+        bkno_tasks.show_all ();
+        bkview.set_placeholder (bkno_tasks);
 
         foreach (var b in Palaura.Application.gsettings.get_strv("bookmarks")) {
             bookmarks += b;
@@ -336,32 +356,54 @@ public class Palaura.MainWindow : Hdy.Window {
         bk_box.add(bk_button);
         bk_box.add(bk_remove_all_button);
 
-        var faux_headerbar = new Hdy.HeaderBar ();
-        faux_headerbar.show_close_button = true;
-        faux_headerbar.has_subtitle = false;
-        faux_headerbar.title = null;
-        faux_headerbar.set_decoration_layout ("close:");
-        faux_headerbar.get_style_context ().add_class ("palaura-recents");
+        fauxheaderbar = new Hdy.HeaderBar ();
+        fauxheaderbar.show_close_button = true;
+        fauxheaderbar.has_subtitle = false;
+        fauxheaderbar.title = null;
+        fauxheaderbar.set_decoration_layout ("close:");
+        fauxheaderbar.get_style_context ().add_class ("palaura-recents");
 
         var outline_grid = new Gtk.Grid ();
         outline_grid.get_style_context ().add_class ("palaura-recents");
         outline_grid.hexpand = false;
-        outline_grid.vexpand = false;
-        outline_grid.set_size_request (165, -1);
+        outline_grid.vexpand = true;
+        outline_grid.set_size_request (251, -1);
         outline_grid.attach (rec_label, 0, 0, 1, 1);
         outline_grid.attach (view, 0, 1, 1, 1);
         outline_grid.attach (bk_box, 0, 2, 1, 1);
         outline_grid.attach (bkview, 0, 3, 1, 1);
         outline_grid.show_all ();
 
+        var side_grid = new Gtk.Grid ();
+        side_grid.attach (fauxheaderbar, 0, 0, 1, 1);
+        side_grid.attach (outline_grid, 0, 1, 1, 1);
+        side_grid.show_all ();
+
         var main_grid = new Gtk.Grid ();
-        main_grid.attach (faux_headerbar, 0, 0, 1, 1);
-        main_grid.attach (headerbar, 1, 0, 1, 1);
-        main_grid.attach (outline_grid, 0, 1, 1, 1);
-        main_grid.attach (stack, 1, 1, 1, 1);
+        main_grid.attach (headerbar, 0, 0, 1, 1);
+        main_grid.attach (stack, 0, 1, 1, 1);
         main_grid.show_all ();
 
-        add (main_grid);
+        var separator = new Gtk.Separator (Gtk.Orientation.VERTICAL);
+        var separator_cx = separator.get_style_context ();
+        separator_cx.add_class ("vsep");
+
+        leaflet = new Hdy.Leaflet ();
+        leaflet.add (side_grid);
+        leaflet.add (separator);
+        leaflet.add (main_grid);
+        leaflet.transition_type = Hdy.LeafletTransitionType.UNDER;
+        leaflet.show_all ();
+        leaflet.can_swipe_back = true;
+        leaflet.set_visible_child (main_grid);
+
+        leaflet.child_set_property (separator, "allow-visible", false);
+
+        leaflet.notify["folded"].connect (() => {
+            update ();
+        });
+
+        add (leaflet);
 
         return_history = new Gee.LinkedList<Palaura.View> ();
 
@@ -379,6 +421,18 @@ public class Palaura.MainWindow : Hdy.Window {
         }
 
         set_size_request (360, 435);
+    }
+
+    private void update () {
+        if (leaflet != null && leaflet.get_folded ()) {
+            // On Mobile size, so.... have to have no buttons anywhere.
+            fauxheaderbar.set_decoration_layout (":");
+            headerbar.set_decoration_layout (":");
+        } else {
+            // Else you're on Desktop size, so business as usual.
+            fauxheaderbar.set_decoration_layout ("close:");
+            headerbar.set_decoration_layout (":maximize");
+        }
     }
 
     private void trigger_search () {
