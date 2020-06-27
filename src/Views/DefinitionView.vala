@@ -32,26 +32,18 @@ public class Palaura.DefinitionView : Palaura.View {
         text_view.buffer = buffer;
         var style_manager = Gtk.SourceStyleSchemeManager.get_default ();
         if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
-            var style = style_manager.get_scheme ("oblivion");
-            buffer.set_style_scheme (style);
             scrolled_window.get_style_context ().add_class ("palaura-view-dark");
             scrolled_window.get_style_context ().remove_class ("palaura-view");
         } else {
-            var style = style_manager.get_scheme ("tango");
-            buffer.set_style_scheme (style);
             scrolled_window.get_style_context ().remove_class ("palaura-view-dark");
             scrolled_window.get_style_context ().add_class ("palaura-view");
         }
 
         Palaura.Application.gsettings.changed.connect (() => {
             if (Palaura.Application.gsettings.get_boolean("dark-mode")) {
-                var style = style_manager.get_scheme ("oblivion");
-                buffer.set_style_scheme (style);
                 scrolled_window.get_style_context ().add_class ("palaura-view-dark");
                 scrolled_window.get_style_context ().remove_class ("palaura-view");
             } else {
-                var style = style_manager.get_scheme ("tango");
-                buffer.set_style_scheme (style);
                 scrolled_window.get_style_context ().remove_class ("palaura-view-dark");
                 scrolled_window.get_style_context ().add_class ("palaura-view");
             }
@@ -60,7 +52,7 @@ public class Palaura.DefinitionView : Palaura.View {
         scrolled_window.add (text_view);
 
         tag_word = buffer.create_tag (null, "weight", Pango.Weight.BOLD, "font", "serif 18");
-        tag_pronunciation = buffer.create_tag (null, "font", "serif 12");
+        tag_pronunciation = buffer.create_tag (null, "font", "serif 14");
         tag_lexical_category = buffer.create_tag (null, "font", "serif 12", "pixels-above-lines", 8, "pixels-inside-wrap", 8);
         tag_sense_numbering = buffer.create_tag (null, "font", "sans 12", "weight", Pango.Weight.HEAVY, "left-margin", 10, "pixels-above-lines", 8, "pixels-inside-wrap", 8);
         tag_sense_definition = buffer.create_tag (null, "font", "serif 12", "left-margin", 10);

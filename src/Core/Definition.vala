@@ -18,18 +18,15 @@ public class Palaura.Core.Definition : Object {
                 obj.lexical_category = category.get_string_member ("text");
         }
 
-        if (root.has_member ("pronunciations")) {
-            Json.Array pronunciations = root.get_array_member ("pronunciations");
-            foreach (var pronunciation in pronunciations.get_elements())
-                obj.pronunciations += Pronunciation.parse_json (pronunciation.get_object ());
-        }
-
         if (root.has_member ("entries")) {
             Json.Array entries = root.get_array_member ("entries");
             var obj_entries = entries.get_object_element(0);
             Json.Array senses = obj_entries.get_array_member("senses");
             foreach (var sense in senses.get_elements())
                 obj.senses += Sense.parse_json (sense.get_object ());
+            Json.Array pronunciations = obj_entries.get_array_member ("pronunciations");
+            foreach (var pronunciation in pronunciations.get_elements())
+                obj.pronunciations += Pronunciation.parse_json (pronunciation.get_object ());
         }
 
         return obj;

@@ -61,6 +61,8 @@ executable(
     'src/Widgets/WordContainerGrid.vala',
     'src/Application.vala',
     'src/MainWindow.vala',
+    'src/BookmarkRow.vala',
+    'src/RecentsRow.vala',
     asresources,
     c_args: c_args,
     dependencies: [

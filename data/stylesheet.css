@@ -1,12 +1,17 @@
-@define-color color_primary #C85050;
+@define-color accent #C85050;
+
+window.unified decoration,
+window.unified decoration-overlay {
+  border-radius: 8px;
+}
 
 .palaura-window {
-    background-color: @color_primary;
+    background-color: @base_color;
     color: #111;
 }
 
 .palaura-window-dark {
-    background-color: shade(@color_primary, 1.4);
+    background-color: @base_color;
     color: #FFF;
 }
 
@@ -20,7 +25,7 @@
 }
 
 .palaura-view:selected {
-    background-color: @accent_color_500;
+    background-color: @accent;
     color: #FFF;
 }
 
@@ -34,19 +39,29 @@
 }
 
 .palaura-view-dark:selected {
-    background-color: @accent_color_500;
+    background-color: @accent;
     color: #FFF;
 }
 
 .palaura-toolbar {
-    background: shade(@color_primary, 1.1);
+    background: @background_color;
+    box-shadow: none;
+    border-bottom: 1px solid alpha(black, 0.25);
 }
 
 .palaura-recents,
+.palaura-recents list,
 .palaura-recents treeview.view {
-    background: @base_color;
+    background: mix (@accent, @base_color, 0.95);
+}
+
+.palaura-recents list row {
+    background: mix (@accent, @base_color, 0.95);
+    padding: 0;
+    margin: 0;
 }
 
 .palaura-recents {
     border-right: 1px solid alpha(black, 0.25);
+    box-shadow: none;
 }

@@ -35,5 +35,10 @@
 			<summary>Recent words</summary>
 			<description>The words logged to the recents pane</description>
 		</key>
+		<key name="bookmarks" type="as">
+			<default>['']</default>
+			<summary>Bookmarks</summary>
+			<description>The words logged to the bookmarks</description>
+		</key>
 	</schema>
 </schemalist>
