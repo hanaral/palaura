@@ -52,7 +52,7 @@ public class Palaura.SearchView : Palaura.View {
     }
 
     public override string get_header_name () {
-        return _("Search");
+        return _("«Search");
     }
 
     public void search (string word, bool append = false) {

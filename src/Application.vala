@@ -28,6 +28,7 @@ public class Palaura.Application : Gtk.Application {
 
     public static int main (string[] args) {
         var application = new Palaura.Application ();
+        Gst.init (ref args);
         return application.run (args);
     }
 }

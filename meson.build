@@ -73,6 +73,7 @@ executable(
         dependency('libsoup-2.4'),
         dependency('json-glib-1.0'),
         dependency('gio-2.0'),
+        dependency('gstreamer-1.0'),
         dependency('libhandy-1', version: '>=0.80.0'),
         dependency('gee-0.8')
     ],
@@ -88,4 +89,4 @@ meson.add_install_script('meson/post_install.py', join_paths(get_option('prefix'
 
 # Add subfolders for Meson to look
 subdir('data')
-# subdir('po')
+#subdir('po')

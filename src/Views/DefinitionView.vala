@@ -1,8 +1,9 @@
 public class Palaura.DefinitionView : Palaura.View {
-
     Gtk.ScrolledWindow scrolled_window;
     Gtk.SourceView text_view;
+    Gtk.Label word_label;
     Gtk.SourceBuffer buffer;
+    Gtk.Grid definition_grid;
     Gtk.TextTag tag_word;
     Gtk.TextTag tag_pronunciation;
     Gtk.TextTag tag_lexical_category;
@@ -16,15 +17,17 @@ public class Palaura.DefinitionView : Palaura.View {
 
     Core.Definition definition;
 
+    string word_audio_str = "";
+
     construct {
         set_size_request (360, -1);
 
         scrolled_window = new Gtk.ScrolledWindow (null, null);
         scrolled_window.set_border_width (0);
-        add (scrolled_window);
 
         text_view = new Gtk.SourceView ();
-        text_view.top_margin = text_view.bottom_margin = text_view.left_margin = text_view.right_margin = 12;
+        text_view.expand = true;
+        text_view.bottom_margin = text_view.left_margin = text_view.right_margin = 12;
         text_view.set_wrap_mode (Gtk.WrapMode.WORD_CHAR);
         text_view.set_editable (false);
         text_view.set_cursor_visible (false);
@@ -49,7 +52,28 @@ public class Palaura.DefinitionView : Palaura.View {
             }
         });
 
-        scrolled_window.add (text_view);
+        word_label = new Gtk.Label ("");
+        word_label.use_markup = true;
+
+        var word_play_button = new Gtk.Button ();
+        word_play_button.image = new Gtk.Image.from_icon_name ("media-playback-start-symbolic", Gtk.IconSize.BUTTON);
+        word_play_button.clicked.connect (() => {
+            var player = new StreamPlayer ();
+            player.play (word_audio_str);
+        });
+
+        var word_grid = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 12);
+        word_grid.margin = 6;
+        word_grid.add (word_label);
+        word_grid.add (word_play_button);
+
+        definition_grid = new Gtk.Grid ();
+        definition_grid.attach (word_grid, 0, 0, 1, 1);
+        definition_grid.attach (text_view, 0, 1, 1, 2);
+        definition_grid.show_all ();
+
+        scrolled_window.add (definition_grid);
+        add (scrolled_window);
 
         tag_word = buffer.create_tag (null, "weight", Pango.Weight.BOLD, "font", "serif 18");
         tag_pronunciation = buffer.create_tag (null, "font", "serif 14");
@@ -69,9 +93,6 @@ public class Palaura.DefinitionView : Palaura.View {
         Gtk.TextIter iter;
         buffer.text = "";
         buffer.get_end_iter (out iter);
-        if(definition.text != null) {
-            buffer.insert_with_tags (ref iter, @"■ $(definition.text) ", -1, tag_word);
-        }
 
         var pronunciations = definition.get_pronunciations ();
         string pronunciation_str = "";
@@ -88,10 +109,12 @@ public class Palaura.DefinitionView : Palaura.View {
                 if (i == pronunciations.length - 1) {
                     pronunciation_str += "/";
                 }
+
+                word_audio_str += pronunciations[i].word_audio;
             }
         }
-        if(pronunciation_str != null) {
-            buffer.insert_with_tags (ref iter, @" $(pronunciation_str) ", -1, tag_pronunciation);
+        if(definition.text != null && pronunciation_str != null) {
+            word_label.label = @"<span weight=\"bold\" font_family=\"serif\" size=\"xx-large\">■ $(definition.text) - $(pronunciation_str)</span>";
         }
 
         buffer.insert(ref iter, "\n", -1);
@@ -134,6 +157,70 @@ public class Palaura.DefinitionView : Palaura.View {
     }
 
     public override string get_header_name () {
-        return _("Definition");
+        return _("«Definition");
+    }
+}
+
+public class Palaura.StreamPlayer {
+
+    private MainLoop loop = new MainLoop ();
+
+    private void foreach_tag (Gst.TagList list, string tag) {
+        switch (tag) {
+        case "title":
+            string tag_string;
+            list.get_string (tag, out tag_string);
+            stdout.printf ("tag: %s = %s\n", tag, tag_string);
+            break;
+        default:
+            break;
+        }
+    }
+
+    private bool bus_callback (Gst.Bus bus, Gst.Message message) {
+        switch (message.type) {
+        case Gst.MessageType.ERROR:
+            GLib.Error err;
+            string debug;
+            message.parse_error (out err, out debug);
+            stdout.printf ("Error: %s\n", err.message);
+            loop.quit ();
+            break;
+        case Gst.MessageType.EOS:
+            stdout.printf ("end of stream\n");
+            break;
+        case Gst.MessageType.STATE_CHANGED:
+            Gst.State oldstate;
+            Gst.State newstate;
+            Gst.State pending;
+            message.parse_state_changed (out oldstate, out newstate,
+                                         out pending);
+            stdout.printf ("state changed: %s->%s:%s\n",
+                           oldstate.to_string (), newstate.to_string (),
+                           pending.to_string ());
+            break;
+        case Gst.MessageType.TAG:
+            Gst.TagList tag_list;
+            stdout.printf ("taglist found\n");
+            message.parse_tag (out tag_list);
+            tag_list.foreach ((Gst.TagForeachFunc) foreach_tag);
+            break;
+        default:
+            break;
+        }
+
+        return true;
+    }
+
+    public void play (string stream) {
+        dynamic Gst.Element play = Gst.ElementFactory.make ("playbin", "play");
+        play.uri = stream;
+
+        Gst.Bus bus = play.get_bus ();
+        bus.add_watch (0, bus_callback);
+
+        play.set_state (Gst.State.PLAYING);
+
+        loop.run ();
     }
 }

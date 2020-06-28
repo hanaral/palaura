@@ -21,6 +21,11 @@ window.unified decoration-overlay {
     color: #111;
 }
 
+.palaura-view textview.view {
+    background-color: #F7F7F7;
+    color: #111;
+}
+
 .palaura-view image {
     color: #111;
 }
@@ -31,6 +36,11 @@ window.unified decoration-overlay {
 }
 
 .palaura-view-dark {
+    background-color: #151515;
+    color: #FFF;
+}
+
+.palaura-view-dark textview.view {
     background-color: #151515;
     color: #FFF;
 }
@@ -54,6 +64,43 @@ window.unified decoration-overlay {
     background: #000;
     box-shadow: none;
     border-bottom: 1px solid alpha(black, 0.25);
+}
+
+.palaura-toolbar .image-button {
+    margin: 8px 0;
+    border-radius: 8px;
+}
+
+.palaura-toolbar entry {
+    margin: 8px;
+    border-radius: 8px;
+    box-shadow: none;
+    background: shade(@color_primary, 1.2);
+}
+
+.palaura-toolbar .back-button {
+    margin: 8px;
+    border-radius: 8px;
+    box-shadow: none;
+    border: none;
+    background: shade(@color_primary, 1.2);
+}
+
+.palaura-toolbar .back-button:hover {
+    background: shade(@base_color, 0.95);
+}
+
+.palaura-toolbar .image-button image {
+    padding: 0 6px;
+}
+
+.palaura-toolbar .image-button:hover {
+    background: shade(@base_color, 0.95);
+}
+
+.palaura-toolbar .image-button:active,
+.palaura-toolbar .image-button.toggle:checked {
+    background: shade(@base_color, 0.95);
 }
 
 .palaura-recents,

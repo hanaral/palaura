@@ -127,12 +127,16 @@ public class Palaura.Core.Definition : Object {
 
     public class Pronunciation {
         public string phonetic_spelling;
+        public string word_audio;
 
         public static Pronunciation parse_json(Json.Object root) {
             Pronunciation obj = new Pronunciation();
 
             if (root.has_member ("phoneticSpelling"))
                 obj.phonetic_spelling = root.get_string_member("phoneticSpelling");
+
+            if (root.has_member ("audioFile"))
+                obj.word_audio = root.get_string_member("audioFile");
 
             return obj;
         }

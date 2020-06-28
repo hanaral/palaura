@@ -86,7 +86,6 @@ public class Palaura.MainWindow : Hdy.Window {
             stack.get_style_context ().add_class ("palaura-view-dark");
             stack.get_style_context ().remove_class ("palaura-view");
             headerbar.get_style_context ().add_class ("palaura-toolbar-dark");
-            headerbar.get_style_context ().remove_class ("palaura-toolbar");
         } else {
             Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = false;
             this.get_style_context ().remove_class ("palaura-window-dark");
@@ -99,7 +98,6 @@ public class Palaura.MainWindow : Hdy.Window {
             definition_view.get_style_context ().remove_class ("palaura-view-dark");
             stack.get_style_context ().add_class ("palaura-view");
             stack.get_style_context ().remove_class ("palaura-view-dark");
-            headerbar.get_style_context ().add_class ("palaura-toolbar");
             headerbar.get_style_context ().remove_class ("palaura-toolbar-dark");
         }
 
@@ -117,7 +115,6 @@ public class Palaura.MainWindow : Hdy.Window {
                 stack.get_style_context ().add_class ("palaura-view-dark");
                 stack.get_style_context ().remove_class ("palaura-view");
                 headerbar.get_style_context ().add_class ("palaura-toolbar-dark");
-                headerbar.get_style_context ().remove_class ("palaura-toolbar");
             } else {
                 Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = false;
                 this.get_style_context ().remove_class ("palaura-window-dark");
@@ -130,7 +127,6 @@ public class Palaura.MainWindow : Hdy.Window {
                 definition_view.get_style_context ().remove_class ("palaura-view-dark");
                 stack.get_style_context ().add_class ("palaura-view");
                 stack.get_style_context ().remove_class ("palaura-view-dark");
-                headerbar.get_style_context ().add_class ("palaura-toolbar");
                 headerbar.get_style_context ().remove_class ("palaura-toolbar-dark");
             }
         });
@@ -175,7 +171,7 @@ public class Palaura.MainWindow : Hdy.Window {
         search_entry.placeholder_text = _("Search words…");
 
         button_stack = new Gtk.Stack ();
-        return_button = new Gtk.Button.with_label (_("Home"));
+        return_button = new Gtk.Button.with_label (_("«Home"));
         return_button.get_style_context ().add_class ("back-button");
         button_stack.add (return_button);
         button_stack.no_show_all = true;
@@ -258,6 +254,8 @@ public class Palaura.MainWindow : Hdy.Window {
         headerbar.pack_start (button_stack);
         headerbar.pack_start (search_entry);
         headerbar.pack_end (menu_button);
+        headerbar.get_style_context ().add_class ("palaura-toolbar");
+        headerbar.get_style_context ().remove_class ("titlebar");
 
         search_view = new Palaura.SearchView();
         normal_view = new Palaura.NormalView();
@@ -288,6 +286,7 @@ public class Palaura.MainWindow : Hdy.Window {
         });
 
         var bk_button = new Gtk.Button ();
+        bk_button.margin_start = 30;
         bk_button.tooltip_text = _("Bookmark Word");
         bk_button.image = new Gtk.Image.from_icon_name ("star-new-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
 
@@ -367,7 +366,7 @@ public class Palaura.MainWindow : Hdy.Window {
         outline_grid.get_style_context ().add_class ("palaura-recents");
         outline_grid.hexpand = false;
         outline_grid.vexpand = true;
-        outline_grid.set_size_request (251, -1);
+        outline_grid.set_size_request (200, -1);
         outline_grid.attach (rec_label, 0, 0, 1, 1);
         outline_grid.attach (view, 0, 1, 1, 1);
         outline_grid.attach (bk_box, 0, 2, 1, 1);
@@ -477,7 +476,7 @@ public class Palaura.MainWindow : Hdy.Window {
             }
         }
         else {
-            return_button.label = _("Home");
+            return_button.label = _("«Home");
             button_stack.hide();
         }
     }
