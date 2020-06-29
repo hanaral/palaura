@@ -172,7 +172,7 @@ public class Palaura.MainWindow : Hdy.Window {
 
         button_stack = new Gtk.Stack ();
         return_button = new Gtk.Button.with_label (_("«Home"));
-        return_button.get_style_context ().add_class ("back-button");
+        return_button.get_style_context ().add_class ("palaura-back-button");
         button_stack.add (return_button);
         button_stack.no_show_all = true;
 
@@ -251,7 +251,6 @@ public class Palaura.MainWindow : Hdy.Window {
         headerbar.set_decoration_layout (":maximize");
         headerbar.set_title (_("Palaura"));
         headerbar.has_subtitle = false;
-        headerbar.pack_start (button_stack);
         headerbar.pack_start (search_entry);
         headerbar.pack_end (menu_button);
         headerbar.get_style_context ().add_class ("palaura-toolbar");
@@ -286,9 +285,9 @@ public class Palaura.MainWindow : Hdy.Window {
         });
 
         var bk_button = new Gtk.Button ();
-        bk_button.margin_start = 30;
         bk_button.tooltip_text = _("Bookmark Word");
         bk_button.image = new Gtk.Image.from_icon_name ("star-new-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        headerbar.pack_start (bk_button);
 
         bkview = new Gtk.ListBox ();
         bkview.hexpand = true;
@@ -340,8 +339,9 @@ public class Palaura.MainWindow : Hdy.Window {
         bk_label.label = _("<span weight=\"bold\">BOOKMARKS</span>");
 
         var bk_remove_all_button = new Gtk.Button ();
+        headerbar.pack_end (bk_remove_all_button);
         bk_remove_all_button.tooltip_text = _("Clean Bookmarks");
-        bk_remove_all_button.image = new Gtk.Image.from_icon_name ("window-close-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        bk_remove_all_button.image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         bk_remove_all_button.clicked.connect (() => {
             foreach (Gtk.Widget item in bkview.get_children ()) {
                 item.destroy ();
@@ -352,15 +352,15 @@ public class Palaura.MainWindow : Hdy.Window {
 
         var bk_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
         bk_box.add(bk_label);
-        bk_box.add(bk_button);
-        bk_box.add(bk_remove_all_button);
 
         fauxheaderbar = new Hdy.HeaderBar ();
+        fauxheaderbar.set_size_request (-1, 45);
         fauxheaderbar.show_close_button = true;
         fauxheaderbar.has_subtitle = false;
         fauxheaderbar.title = null;
         fauxheaderbar.set_decoration_layout ("close:");
         fauxheaderbar.get_style_context ().add_class ("palaura-recents");
+        fauxheaderbar.pack_start (button_stack);
 
         var outline_grid = new Gtk.Grid ();
         outline_grid.get_style_context ().add_class ("palaura-recents");

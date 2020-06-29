@@ -10,6 +10,13 @@ window.unified decoration-overlay {
     font-weight: 700;
 }
 
+.palaura-back-button {
+    background: mix (@accent, @content_view_bg, 0.95);
+    box-shadow: none;
+    border: 1px solid shade(mix (@accent, @content_view_bg, 0.95), 0.88);
+    border-radius: 8px;
+}
+
 .palaura-window {
     background-color: @base_color;
     color: #111;
