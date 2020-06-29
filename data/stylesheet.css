@@ -95,14 +95,15 @@ window.unified decoration-overlay {
     background: shade(@base_color, 0.95);
 }
 
+.palaura-toolbar .image-button {
+    border-radius: 8px;
+}
+
 .palaura-toolbar .image-button image {
     padding: 0 6px;
 }
 
-.palaura-toolbar .image-button:hover {
-    background: shade(@base_color, 0.95);
-}
-
+.palaura-toolbar .image-button:hover,
 .palaura-toolbar .image-button:active,
 .palaura-toolbar .image-button.toggle:checked {
     background: shade(@base_color, 0.95);
