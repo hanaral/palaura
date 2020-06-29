@@ -68,7 +68,6 @@ window.unified decoration-overlay {
 .palaura-toolbar {
     background: @background_color;
     box-shadow: none;
-    margin: 7px;
     border-bottom: 1px solid alpha(black, 0.25);
 }
 
@@ -76,12 +75,6 @@ window.unified decoration-overlay {
     background: #000;
     box-shadow: none;
     border-bottom: 1px solid alpha(black, 0.25);
-}
-
-.palaura-toolbar entry {
-    border-radius: 8px;
-    box-shadow: none;
-    background: shade(@color_primary, 1.2);
 }
 
 .palaura-toolbar .back-button {
@@ -102,6 +95,13 @@ window.unified decoration-overlay {
 .palaura-toolbar .image-button image {
     padding: 0 6px;
 }
+
+.palaura-search {
+    margin: 2px 1px;
+    border-radius: 8px;
+    box-shadow: none;
+    background: shade(@color_primary, 1.2);
+ }
 
 .palaura-toolbar .image-button:hover,
 .palaura-toolbar .image-button:active,

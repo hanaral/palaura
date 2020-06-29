@@ -169,6 +169,7 @@ public class Palaura.MainWindow : Hdy.Window {
 
         search_entry = new Gtk.SearchEntry ();
         search_entry.placeholder_text = _("Search words…");
+        search_entry.get_style_context ().add_class ("palaura-search");
 
         button_stack = new Gtk.Stack ();
         return_button = new Gtk.Button.with_label (_("«Home"));
@@ -254,7 +255,6 @@ public class Palaura.MainWindow : Hdy.Window {
         headerbar.pack_start (search_entry);
         headerbar.pack_end (menu_button);
         headerbar.get_style_context ().add_class ("palaura-toolbar");
-        headerbar.get_style_context ().remove_class ("titlebar");
 
         search_view = new Palaura.SearchView();
         normal_view = new Palaura.NormalView();
