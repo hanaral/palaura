@@ -252,8 +252,6 @@ public class Palaura.MainWindow : Hdy.Window {
         headerbar.set_decoration_layout (":maximize");
         headerbar.set_title (_("Palaura"));
         headerbar.has_subtitle = false;
-        headerbar.pack_start (search_entry);
-        headerbar.pack_end (menu_button);
         headerbar.get_style_context ().add_class ("palaura-toolbar");
 
         search_view = new Palaura.SearchView();
@@ -287,7 +285,6 @@ public class Palaura.MainWindow : Hdy.Window {
         var bk_button = new Gtk.Button ();
         bk_button.tooltip_text = _("Bookmark Word");
         bk_button.image = new Gtk.Image.from_icon_name ("star-new-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
-        headerbar.pack_start (bk_button);
 
         bkview = new Gtk.ListBox ();
         bkview.hexpand = true;
@@ -339,7 +336,6 @@ public class Palaura.MainWindow : Hdy.Window {
         bk_label.label = _("<span weight=\"bold\">BOOKMARKS</span>");
 
         var bk_remove_all_button = new Gtk.Button ();
-        headerbar.pack_end (bk_remove_all_button);
         bk_remove_all_button.tooltip_text = _("Clean Bookmarks");
         bk_remove_all_button.image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
         bk_remove_all_button.clicked.connect (() => {
@@ -360,7 +356,6 @@ public class Palaura.MainWindow : Hdy.Window {
         fauxheaderbar.title = null;
         fauxheaderbar.set_decoration_layout ("close:");
         fauxheaderbar.get_style_context ().add_class ("palaura-recents");
-        fauxheaderbar.pack_start (button_stack);
 
         var outline_grid = new Gtk.Grid ();
         outline_grid.get_style_context ().add_class ("palaura-recents");
@@ -372,6 +367,15 @@ public class Palaura.MainWindow : Hdy.Window {
         outline_grid.attach (bk_box, 0, 2, 1, 1);
         outline_grid.attach (bkview, 0, 3, 1, 1);
         outline_grid.show_all ();
+
+        /*
+         * Headerbars Packing
+         */
+        headerbar.pack_start (search_entry);
+        headerbar.pack_end (menu_button);
+        headerbar.pack_end (bk_remove_all_button);
+        headerbar.pack_end (bk_button);
+        fauxheaderbar.pack_start (button_stack);
 
         var side_grid = new Gtk.Grid ();
         side_grid.attach (fauxheaderbar, 0, 0, 1, 1);
