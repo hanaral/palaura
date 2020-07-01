@@ -187,39 +187,38 @@ public class Palaura.MainWindow : Hdy.Window {
 
         var label = new Gtk.Label (_("Lookup language:"));
         label.halign = Gtk.Align.END;
-        var lang = new Gtk.ComboBoxText ();
-        lang.append_text (_("English"));
-        lang.append_text (_("Spanish"));
-        lang.append_text (_("Hindi"));
-        var dict_lang = Palaura.Application.gsettings.get_string("dict-lang");
 
-        switch (dict_lang) {
-            case "en":
-                lang.active = 0;
-                break;
-            case "es":
-                lang.active = 1;
-                break;
-            case "hi":
-                lang.active = 2;
-                break;
-            default:
-                lang.active = 0;
-                break;
-        }
-        lang.changed.connect (() => {
-            switch (lang.active) {
-                case 0:
-                    Palaura.Application.gsettings.set_string("dict-lang", "en");
-                    break;
-                case 1:
-                    Palaura.Application.gsettings.set_string("dict-lang", "es");
-                    break;
-                case 2:
-                    Palaura.Application.gsettings.set_string("dict-lang", "hi");
-                    break;
-            }
+        var item_en = new Gtk.RadioButton.with_label_from_widget (null, _("English"));
+        item_en.toggled.connect (() => {
+            Palaura.Application.gsettings.set_string("dict-lang", "en");
         });
+
+        var item_es = new Gtk.RadioButton.with_label_from_widget (item_en, _("Spanish"));
+        item_es.toggled.connect (() => {
+            Palaura.Application.gsettings.set_string("dict-lang", "es");
+        });
+
+        var item_hi = new Gtk.RadioButton.with_label_from_widget (item_en, _("Hindi"));
+        item_es.toggled.connect (() => {
+            Palaura.Application.gsettings.set_string("dict-lang", "es");
+        });
+
+        if (Palaura.Application.gsettings.get_string("dict-lang") == "es") {
+            item_es.set_active (true);
+        } else if (Palaura.Application.gsettings.get_string("dict-lang") == "en") {
+            item_en.set_active (true);
+        } else if (Palaura.Application.gsettings.get_string("dict-lang") == "hi") {
+
+        }
+
+        var dictionary_grid = new Gtk.Grid ();
+        dictionary_grid.row_spacing = 12;
+        dictionary_grid.orientation = Gtk.Orientation.VERTICAL;
+        dictionary_grid.add (item_en);
+        dictionary_grid.add (item_es);
+        dictionary_grid.add (item_hi);
+        dictionary_grid.show_all ();
+
 
         var dark_header = new Granite.HeaderLabel (_("Interface"));
         var dict_header = new Granite.HeaderLabel (_("Dictionary"));
@@ -234,7 +233,7 @@ public class Palaura.MainWindow : Hdy.Window {
         settings_grid.attach (mode_switch, 1, 1, 1, 1);
         settings_grid.attach (dict_header, 0, 2, 1, 1);
         settings_grid.attach (label, 0, 4, 1, 1);
-        settings_grid.attach (lang, 1, 4, 1, 1);
+        settings_grid.attach (dictionary_grid, 1, 4, 1, 1);
         settings_grid.show_all ();
 
         var settings_pop = new Gtk.Popover (null);

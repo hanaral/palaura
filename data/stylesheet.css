@@ -1,5 +1,6 @@
 @define-color accent #C85050;
 @define-color accent_color_500 #C85050;
+@define-color accent_color_300 #C85050;
 
 window.unified decoration,
 window.unified decoration-overlay {
