@@ -29,8 +29,8 @@
      id="namedview28"
      showgrid="true"
      inkscape:zoom="34.869094"
-     inkscape:cx="-1.3738674"
-     inkscape:cy="5.3661301"
+     inkscape:cx="-6.5073532"
+     inkscape:cy="5.1223612"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -323,11 +323,11 @@
        id="linearGradient3108">
       <stop
          offset="0"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#ac3636;stop-opacity:1"
          id="stop3110" />
       <stop
          offset="0.92477626"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#ac3636;stop-opacity:1"
          id="stop3112" />
       <stop
          offset="0.93581694"
@@ -376,7 +376,7 @@
      x="3.4934862"
      y="2.49316"
      id="rect2719"
-     style="display:inline;fill:#ff8c82;fill-opacity:1;stroke:#ed5353;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+     style="display:inline;fill:#c85050;fill-opacity:1;stroke:#ac3636;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      d="m 4.5,2.5 c 0,0 0,8.344131 0,12 l -1.5999999,0 C 2.6716605,14.5 2.5,14.37299 2.5,14.207316 L 2.5,2.5 Z"

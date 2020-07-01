@@ -29,8 +29,8 @@
      id="namedview41"
      showgrid="true"
      inkscape:zoom="8.0000004"
-     inkscape:cx="42.731985"
-     inkscape:cy="91.010831"
+     inkscape:cx="20.356986"
+     inkscape:cy="89.948331"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -241,11 +241,11 @@
        id="linearGradient4652">
       <stop
          offset="0"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#a53434;stop-opacity:1"
          id="stop4654" />
       <stop
          offset="0.95970964"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#a53434;stop-opacity:1"
          id="stop4656" />
       <stop
          offset="0.96326458"
@@ -364,7 +364,7 @@
      inkscape:connector-curvature="0"
      d="m 31.492878,19.499952 -10.394303,0 c -1.483393,0 -2.598576,-0.126997 -2.598576,-0.292678 l 0,-8.88597 c 0,-2.1118382 0.643648,-2.8212528 2.545447,-2.8212528 l 10.447432,0"
      id="rect5505-21-3-9"
-     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#fafafa;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3158);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
+     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#fafafa;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
   <rect
      width="90"
      height="103.99999"
@@ -373,7 +373,7 @@
      x="22.5"
      y="15.500008"
      id="rect2719"
-     style="display:inline;fill:#ff8c82;fill-opacity:1;stroke:#ed5353;stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+     style="display:inline;fill:#c85050;fill-opacity:1;stroke:#a53434;stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      d="m 31.499999,15.5 c 0,0 0,72.315803 0,104 l -10.728851,0 c -1.484205,0 -2.271149,-0.83527 -2.271149,-2.27108 l 0,-101.72892 z"

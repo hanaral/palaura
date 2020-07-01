@@ -29,8 +29,8 @@
      id="namedview33"
      showgrid="true"
      inkscape:zoom="24.256474"
-     inkscape:cx="0.092707329"
-     inkscape:cy="10.522941"
+     inkscape:cx="-7.2867659"
+     inkscape:cy="10.172519"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -432,19 +432,19 @@
        id="linearGradient3110">
       <stop
          offset="0"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#aa3636;stop-opacity:1"
          id="stop3112" />
       <stop
          offset="0.93372953"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#aa3636;stop-opacity:1"
          id="stop3114" />
       <stop
          offset="0.9424805"
-         style="stop-color:#cec7b6;stop-opacity:1"
+         style="stop-color:#d4d4d4;stop-opacity:1"
          id="stop3116" />
       <stop
          offset="1"
-         style="stop-color:#cec7b6;stop-opacity:1"
+         style="stop-color:#d4d4d4;stop-opacity:1"
          id="stop3118" />
     </linearGradient>
     <radialGradient
@@ -571,7 +571,7 @@
      x="4.5095205"
      y="2.5098503"
      id="rect2719"
-     style="display:inline;fill:#ff8c82;fill-opacity:1;stroke:#ed5353;stroke-width:1.01903343;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+     style="display:inline;fill:#c85050;fill-opacity:1;stroke:#aa3636;stroke-width:1.01903343;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      d="m 5.4999998,2.5000146 c 0,0 0,13.2113434 0,18.9997144 l -1.6,0 c -0.2283394,0 -0.4,-0.201096 -0.4,-0.463408 l 0,-18.5363064 z"

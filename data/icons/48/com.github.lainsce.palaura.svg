@@ -32,8 +32,8 @@
      id="namedview37"
      showgrid="true"
      inkscape:zoom="18.72093"
-     inkscape:cx="-2.7881979"
-     inkscape:cy="24.194411"
+     inkscape:cx="23.24343"
+     inkscape:cy="30.150312"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -214,19 +214,19 @@
        id="linearGradient4652">
       <stop
          offset="0"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#a53434;stop-opacity:1"
          id="stop4654" />
       <stop
          offset="0.95970964"
-         style="stop-color:#ed5353;stop-opacity:1"
+         style="stop-color:#a53434;stop-opacity:1"
          id="stop4656" />
       <stop
          offset="0.96326458"
-         style="stop-color:#cec7b6;stop-opacity:1"
+         style="stop-color:#d4d4d4;stop-opacity:1"
          id="stop4658" />
       <stop
          offset="1"
-         style="stop-color:#cec7b6;stop-opacity:1"
+         style="stop-color:#d4d4d4;stop-opacity:1"
          id="stop4660" />
     </linearGradient>
     <radialGradient
@@ -332,7 +332,7 @@
      inkscape:connector-curvature="0"
      d="m 11.493178,7.5002445 -3.9947782,0 c -0.5701027,0 -0.9986943,-0.042339 -0.9986943,-0.097573 l 0,-2.7967802 c 0,-0.8880336 0.5583023,-1.1061355 1.2892089,-1.1061355 l 3.7042636,0"
      id="rect5505-21-3-9"
-     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#fafafa;fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3158);stroke-width:0.99941105;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
+     style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#fafafa;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:0.99941105;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
   <rect
      width="34.017906"
      height="38.017906"
@@ -341,7 +341,7 @@
      x="7.491046"
      y="6.4910479"
      id="rect2719"
-     style="display:inline;fill:#ff8c82;fill-opacity:1;stroke:#ed5353;stroke-width:0.9820922;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+     style="display:inline;fill:#c85050;fill-opacity:1;stroke:#a53434;stroke-width:0.9820922;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      d="m 11.516811,6.4831884 c 0,0 0,26.4464636 0,38.0336216 l -4.0268975,0 c -0.5746866,0 -1.0067243,-0.402553 -1.0067243,-0.92765 l 0,-37.1059716 z"
@@ -349,11 +349,11 @@
      style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#333333;fill-opacity:1;fill-rule:nonzero;stroke:#1a1a1a;stroke-width:0.96637833;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
   <g
      transform="matrix(0.95308839,0,0,0.87132504,2.000001,3.8823525)"
-     style="font-style:normal;font-weight:normal;font-size:25.02246094px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="font-style:normal;font-weight:normal;font-size:25.02246094px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      id="text4689">
     <path
        d="m 30.007404,33.417664 -1.52725,-4.39848 -6.561065,0 -1.52725,4.39848 -3.60431,0 6.280052,-17.21516 4.251863,0 6.255615,17.21516 -3.567655,0 z m -4.813892,-14.563855 -0.07331,0.268796 q -0.12218,0.439848 -0.293232,1.001876 -0.171051,0.562028 -2.101495,6.182307 l 4.948289,0 -1.698302,-4.948289 -0.525374,-1.661648 -0.256578,-0.843042 z"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#333333;fill-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:sans-serif;-inkscape-font-specification:'sans-serif Bold';fill:#fafafa;fill-opacity:1"
        id="path4694"
        inkscape:connector-curvature="0" />
   </g>
