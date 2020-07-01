@@ -13,7 +13,7 @@
    viewBox="0 0 16 16"
    id="svg2"
    version="1.1"
-   inkscape:version="0.91 r13725"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="com.github.lainsce.palaura.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -24,13 +24,13 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="962"
+     inkscape:window-width="2560"
+     inkscape:window-height="964"
      id="namedview28"
      showgrid="true"
      inkscape:zoom="34.869094"
-     inkscape:cx="3.616225"
-     inkscape:cy="5.6385777"
+     inkscape:cx="-1.3738674"
+     inkscape:cy="5.3661301"
      inkscape:window-x="0"
      inkscape:window-y="30"
      inkscape:window-maximized="1"
@@ -43,15 +43,18 @@
     <sodipodi:guide
        position="20,1"
        orientation="0,1"
-       id="guide3596" />
+       id="guide3596"
+       inkscape:locked="false" />
     <sodipodi:guide
        position="20,14"
        orientation="0,1"
-       id="guide3598" />
+       id="guide3598"
+       inkscape:locked="false" />
     <sodipodi:guide
        position="20,8"
        orientation="0,1"
-       id="guide3600" />
+       id="guide3600"
+       inkscape:locked="false" />
   </sodipodi:namedview>
   <defs
      id="defs4">
@@ -373,17 +376,10 @@
      x="3.4934862"
      y="2.49316"
      id="rect2719"
-     style="display:inline;fill:url(#radialGradient3080);fill-opacity:1;stroke:url(#linearGradient3082);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+     style="display:inline;fill:#ff8c82;fill-opacity:1;stroke:#ed5353;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      d="m 4.5,2.5 c 0,0 0,8.344131 0,12 l -1.5999999,0 C 2.6716605,14.5 2.5,14.37299 2.5,14.207316 L 2.5,2.5 Z"
      id="rect5505-21-3"
      style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:url(#radialGradient3075);fill-opacity:1;fill-rule:nonzero;stroke:url(#linearGradient3077);stroke-width:0.99999994;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker:none;enable-background:accumulate" />
-  <rect
-     width="9"
-     height="10"
-     x="3.5"
-     y="3.5"
-     id="rect6741-0"
-     style="opacity:0.5;fill:none;stroke:url(#linearGradient3072);stroke-width:1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
 </svg>
