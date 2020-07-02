@@ -177,10 +177,6 @@ public class Palaura.StreamPlayer {
         }
     }
 
-    ~StreamPlayer () {
-      loop.quit ();
-    }
-
     private bool bus_callback (Gst.Bus bus, Gst.Message message) {
         switch (message.type) {
         case Gst.MessageType.ERROR:
@@ -191,7 +187,7 @@ public class Palaura.StreamPlayer {
             loop.quit ();
             break;
         case Gst.MessageType.EOS:
-            stdout.printf ("end of stream\n");
+            loop.quit ();
             break;
         case Gst.MessageType.STATE_CHANGED:
             Gst.State oldstate;
