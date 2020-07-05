@@ -276,7 +276,7 @@ public class Palaura.MainWindow : Hdy.Window {
         no_tasks.show_all ();
         view.set_placeholder (no_tasks);
 
-        view.row_selected.connect ((row) => {
+        view.row_activated.connect ((row) => {
             search_entry.text = ((Palaura.RecentsRow)row).title;
             trigger_search ();
         });
@@ -313,7 +313,7 @@ public class Palaura.MainWindow : Hdy.Window {
             bkview.add (viewbox);
         });
 
-        bkview.row_selected.connect ((row) => {
+        bkview.row_activated.connect ((row) => {
             search_entry.text = ((Palaura.BookmarkRow)row).title;
             trigger_search ();
         });
