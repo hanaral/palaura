@@ -264,7 +264,8 @@ public class Palaura.MainWindow : Hdy.Window {
 
         view = new Gtk.ListBox ();
         view.hexpand = true;
-        view.margin_start = 6;
+        view.margin_top = 4;
+        view.margin_start = view.margin_end = 6;
         view.margin_bottom = 12;
 
         var no_tasks = new Gtk.Label (_("No Recents…"));
@@ -287,7 +288,8 @@ public class Palaura.MainWindow : Hdy.Window {
 
         bkview = new Gtk.ListBox ();
         bkview.hexpand = true;
-        bkview.margin_start = 6;
+        bkview.margin_top = 4;
+        bkview.margin_start = bkview.margin_end = 6;
         bkview.margin_bottom = 12;
 
         var bkno_tasks = new Gtk.Label (_("No Bookmarks…"));
