@@ -11,6 +11,10 @@ window.unified decoration-overlay {
     font-weight: 700;
 }
 
+.destructive-button:hover {
+    color: #D07070;
+}
+
 .palaura-back-button {
     background: mix (@accent, @base_color, 0.95);
     box-shadow: none;

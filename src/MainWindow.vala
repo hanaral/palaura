@@ -337,12 +337,51 @@ public class Palaura.MainWindow : Hdy.Window {
         var bk_remove_all_button = new Gtk.Button ();
         bk_remove_all_button.tooltip_text = _("Clean Bookmarks");
         bk_remove_all_button.image = new Gtk.Image.from_icon_name ("edit-clear-all-symbolic", Gtk.IconSize.SMALL_TOOLBAR);
+        bk_remove_all_button.get_style_context ().add_class ("destructive-button");
+
         bk_remove_all_button.clicked.connect (() => {
-            foreach (Gtk.Widget item in bkview.get_children ()) {
-                item.destroy ();
-            }
-            bookmarks = null;
-            Palaura.Application.gsettings.set_strv("bookmarks", null);
+            var dialog = new Granite.MessageDialog.with_image_from_icon_name (
+                "Clear All Bookmarks?",
+                "Clearing all bookmarks means to have to bookmark them again afterwards as there will be none listed.",
+                "dialog-information",
+                Gtk.ButtonsType.NONE
+            );
+            var clear_button = new Gtk.Button.with_label (_("Clear All"));
+            clear_button.get_style_context ().add_class (Gtk.STYLE_CLASS_DESTRUCTIVE_ACTION);
+            dialog.add_action_widget (clear_button, Gtk.ResponseType.OK);
+
+            var cancel_button = new Gtk.Button.with_label (_("Cancel"));
+            dialog.add_action_widget (cancel_button, Gtk.ResponseType.CANCEL);
+            cancel_button.clicked.connect (() => { dialog.destroy (); });
+            dialog.show_all ();
+            dialog.transient_for = this;
+            dialog.modal = true;
+
+            dialog.run ();
+
+            
+            dialog.response.connect ((response_id) => {
+                switch (response_id) {
+                    case Gtk.ResponseType.OK:
+                        foreach (Gtk.Widget item in bkview.get_children ()) {
+                            item.destroy ();
+                        }
+                        bookmarks = null;
+                        Palaura.Application.gsettings.set_strv("bookmarks", null);
+                        dialog.close ();
+                        break;
+                    case Gtk.ResponseType.NO:
+                        dialog.close ();
+                        break;
+                    case Gtk.ResponseType.CANCEL:
+                    case Gtk.ResponseType.CLOSE:
+                    case Gtk.ResponseType.DELETE_EVENT:
+                        dialog.close ();
+                        return;
+                    default:
+                        assert_not_reached ();
+                }
+            });
         });
 
         var bk_box = new Gtk.Box (Gtk.Orientation.HORIZONTAL, 6);
