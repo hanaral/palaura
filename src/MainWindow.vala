@@ -321,20 +321,22 @@ public class Palaura.MainWindow : Hdy.Window {
         });
 
         var rec_label = new Gtk.Label (null);
+        rec_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
         rec_label.tooltip_text = _("Recents will only show searched words in this session.");
         rec_label.use_markup = true;
         rec_label.halign = Gtk.Align.START;
         rec_label.margin = 6;
         rec_label.margin_start = 15;
-        rec_label.label = _("<span weight=\"bold\">RECENTS</span>");
+        rec_label.label = _("RECENTS");
 
         var bk_label = new Gtk.Label (null);
+        bk_label.get_style_context ().add_class (Granite.STYLE_CLASS_H4_LABEL);
         bk_label.tooltip_text = _("Bookmarks will show saved words.");
         bk_label.use_markup = true;
         bk_label.halign = Gtk.Align.START;
         bk_label.margin = 6;
         bk_label.margin_start = 15;
-        bk_label.label = _("<span weight=\"bold\">BOOKMARKS</span>");
+        bk_label.label = _("BOOKMARKS");
 
         var bk_remove_all_button = new Gtk.Button ();
         bk_remove_all_button.tooltip_text = _("Clean Bookmarks");
