@@ -17,8 +17,6 @@ public class Palaura.DefinitionView : Palaura.View {
 
     Core.Definition definition;
 
-    string word_audio_str = "";
-
     construct {
         set_size_request (360, -1);
 
@@ -59,6 +57,7 @@ public class Palaura.DefinitionView : Palaura.View {
         word_play_button.image = new Gtk.Image.from_icon_name ("media-playback-start-symbolic", Gtk.IconSize.BUTTON);
         word_play_button.clicked.connect (() => {
             var player = new StreamPlayer ();
+            var word_audio_str = definition.get_pronunciations ()[0].word_audio;
             player.play (word_audio_str);
         });
 
@@ -109,8 +108,6 @@ public class Palaura.DefinitionView : Palaura.View {
                 if (i == pronunciations.length - 1) {
                     pronunciation_str += "/";
                 }
-
-                word_audio_str += pronunciations[i].word_audio;
             }
         }
         if(definition.text != null && pronunciation_str != null) {
@@ -164,18 +161,7 @@ public class Palaura.DefinitionView : Palaura.View {
 public class Palaura.StreamPlayer {
 
     private MainLoop loop = new MainLoop ();
-
-    private void foreach_tag (Gst.TagList list, string tag) {
-        switch (tag) {
-        case "title":
-            string tag_string;
-            list.get_string (tag, out tag_string);
-            stdout.printf ("tag: %s = %s\n", tag, tag_string);
-            break;
-        default:
-            break;
-        }
-    }
+    dynamic Gst.Element playef;
 
     private bool bus_callback (Gst.Bus bus, Gst.Message message) {
         switch (message.type) {
@@ -187,6 +173,7 @@ public class Palaura.StreamPlayer {
             loop.quit ();
             break;
         case Gst.MessageType.EOS:
+            playef.set_state (Gst.State.NULL);
             loop.quit ();
             break;
         case Gst.MessageType.STATE_CHANGED:
@@ -199,12 +186,6 @@ public class Palaura.StreamPlayer {
                            oldstate.to_string (), newstate.to_string (),
                            pending.to_string ());
             break;
-        case Gst.MessageType.TAG:
-            Gst.TagList tag_list;
-            stdout.printf ("taglist found\n");
-            message.parse_tag (out tag_list);
-            tag_list.foreach ((Gst.TagForeachFunc) foreach_tag);
-            break;
         default:
             break;
         }
@@ -213,13 +194,12 @@ public class Palaura.StreamPlayer {
     }
 
     public void play (string stream) {
-        dynamic Gst.Element play = Gst.ElementFactory.make ("playbin", "play");
-        play.uri = stream;
+        playef = Gst.ElementFactory.make ("playbin", "playef");
+        playef.uri = stream;
 
-        Gst.Bus bus = play.get_bus ();
+        Gst.Bus bus = playef.get_bus ();
         bus.add_watch (0, bus_callback);
-
-        play.set_state (Gst.State.PLAYING);
+        playef.set_state (Gst.State.PLAYING);
 
         loop.run ();
     }
