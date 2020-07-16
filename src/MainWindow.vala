@@ -155,6 +155,7 @@ public class Palaura.MainWindow : Hdy.Window {
     }
 
     construct {
+        Hdy.init ();
         var provider = new Gtk.CssProvider ();
         provider.load_from_resource ("/com/github/lainsce/palaura/stylesheet.css");
         Gtk.StyleContext.add_provider_for_screen (Gdk.Screen.get_default (), provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
